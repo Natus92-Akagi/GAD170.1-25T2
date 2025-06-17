@@ -10,6 +10,7 @@ public class GADOneSevenZeroProjectOne : MonoBehaviour
     public int playerAttack = 0;
     public int playerExp = 0;
     public int playerGainExp = 0;
+    public int playerExpThreshold = 0;
     public float playerAttackIncreaseRate = 0;
     public float playerExpThresholdIncreaseRate = 0;
 
@@ -28,6 +29,7 @@ public class GADOneSevenZeroProjectOne : MonoBehaviour
         playerLevel = 1;
         playerAttack = 15;
         playerExp = 0;
+        playerExpThreshold = 125;
         playerAttackIncreaseRate = 1.25f;
         playerExpThresholdIncreaseRate = 1.25f;
         playerGainExp = Random.Range(30, 60 + 1);
@@ -51,10 +53,12 @@ public class GADOneSevenZeroProjectOne : MonoBehaviour
             
 
 
-            // if the goblin less than or equal to 0 health 
+            // if the enemy less than or equal to 0 health 
             if (IsEnemyDead() == true)
             {
-                // spawn new goblin
+                GainExp();
+                LevelUp();
+                // spawn new Koopa
                 SpawnNewEnemy();
             }
 
@@ -69,13 +73,13 @@ public class GADOneSevenZeroProjectOne : MonoBehaviour
     {
         // the enemy taken damage from player who control Mario
         enemyHealth = enemyHealth - amount;
-        Debug.Log("The Enemy: " + enemyName + "Has " + enemyHealth + "HP");
+        Debug.Log("The Enemy: " + enemyName + " Has " + enemyHealth + " HP " + " level " + enemyLevel);
     }
     public void SpawnNewEnemy()
     {
         // the Enemies will Bowser along with Bowser Jr. and the Kooopalings
         enemyHealth = Random.Range(120, 500 + 1);
-        enemyLevel = Random.Range(1, 5);
+        enemyLevel = Random.Range(1, 5 + 1);
 
         int randomNumber = Random.Range(0, 8);
 
@@ -118,18 +122,32 @@ public class GADOneSevenZeroProjectOne : MonoBehaviour
     }
     public bool IsEnemyDead()
     {
+        // this for koopa is defeat it
         bool isDead = (enemyHealth <= 0);
         Debug.Log("Koopa is defeat it?" + true);
         return true;
     }
     public void LevelUp()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+        //if (Input.GetKeyDown(KeyCode.LeftControl))
         {
-            Debug.Log("confirm the left control working as intend");
+            if (playerExp >= playerExpThreshold)
+            {
+                // the player level up faction 
+                playerLevel = playerLevel + 1;
+                playerExp = playerExp - playerExpThreshold;
+                playerExpThreshold = playerExpThreshold + 25;
+
+                Debug.Log(playerName + " level " + playerLevel);
+            }
         }
+
     }
+    public void GainExp()
+    {
+        playerExp = playerExp + playerGainExp + Random.Range(30, 60 + 1);
 
-
+        Debug.Log(" Ganied this " + playerGainExp + " Exp! "); 
+    }
 }
     

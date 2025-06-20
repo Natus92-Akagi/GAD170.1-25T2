@@ -15,7 +15,7 @@ public class GADOneSevenZeroProjectOne : MonoBehaviour
     public float playerExpThresholdIncreaseRate = 0;
 
     // the Enemy's variables 
-    public string enemyName = "";
+    public string enemyName = " Boom Boom";
     public int enemyLevel = 0;
     public int enemyHealth = 0;
 
@@ -38,7 +38,6 @@ public class GADOneSevenZeroProjectOne : MonoBehaviour
         enemyHealth = Random.Range(156, 356 + 1);
 
 
-        gameIsPlaying = true;
     }
 
     // Update is called once per frame
@@ -59,8 +58,20 @@ public class GADOneSevenZeroProjectOne : MonoBehaviour
                 GainExp();
                 LevelUp();
                 // spawn new Koopa
-                SpawnNewEnemy();
+                if (playerLevel >= 5)
+                {
+                    gameIsPlaying = false;
+                    Debug.Log("You Win the game!");
+                }
+                else
+                {
+                    SpawnNewEnemy();
+                }
             }
+
+
+           
+            
 
 
 
@@ -145,9 +156,15 @@ public class GADOneSevenZeroProjectOne : MonoBehaviour
     }
     public void GainExp()
     {
-        playerExp = playerExp + playerGainExp + Random.Range(30, 60 + 1);
+        playerExp = playerExp + playerGainExp + Random.Range(10, 30 + 1);
 
-        Debug.Log(" Ganied this " + playerGainExp + " Exp! "); 
+        Debug.Log(playerName + " Have got this amount " + playerExp + "   " + playerGainExp + " Exp " + playerExpThreshold + " To reach to next level");
+        // the player Exp 
+        Debug.Log(playerName + " This amount of Exp! " + playerGainExp);
+        
+
     }
+
+
 }
     
